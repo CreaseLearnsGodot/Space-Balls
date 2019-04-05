@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://maps/Maps.gd" type="Script" id=1]
+[ext_resource path="res://assets/spacebg.png" type="Texture" id=2]
+[ext_resource path="res://ships/Player.tscn" type="PackedScene" id=3]
+
+[sub_resource type="SegmentShape2D" id=1]
+b = Vector2( 1440, -6.48499e-005 )
+
+[sub_resource type="SegmentShape2D" id=2]
+b = Vector2( 2928, 0 )
+
+[sub_resource type="SegmentShape2D" id=3]
+b = Vector2( 0, 1440 )
+
+[sub_resource type="SegmentShape2D" id=4]
+b = Vector2( -2928, 0 )
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="SpaceBG" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+centered = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="InvisibleBorder" type="StaticBody2D" parent="."]
+editor/display_folded = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="leftwall" type="CollisionShape2D" parent="InvisibleBorder"]
+position = Vector2( 32, 32 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="topwall" type="CollisionShape2D" parent="InvisibleBorder"]
+position = Vector2( 32, 32 )
+shape = SubResource( 2 )
+
+[node name="rightwall" type="CollisionShape2D" parent="InvisibleBorder"]
+position = Vector2( 2960, 32 )
+shape = SubResource( 3 )
+
+[node name="bottomwall" type="CollisionShape2D" parent="InvisibleBorder"]
+position = Vector2( 2960, 1472 )
+shape = SubResource( 4 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 460, 250 )
+
+[connection signal="shoot" from="Player" to="." method="_on_Ships_shoot"]

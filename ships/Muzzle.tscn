@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CanvasItemMaterial" id=3]
+
+[node name="Muzzle" type="Position2D"]
+show_behind_parent = true
+material = SubResource( 3 )
+position = Vector2( 20, 0 )
+
