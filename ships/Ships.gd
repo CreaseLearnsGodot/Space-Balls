@@ -5,7 +5,6 @@ signal shoot
 export (PackedScene) var Bullet = preload("res://bullets/Bullet.tscn")
 
 
-
 func shoot():
 	var dir = Vector2(1, 0).rotated($Muzzle.global_rotation)
 	emit_signal('shoot', Bullet,$Muzzle.global_position, dir)

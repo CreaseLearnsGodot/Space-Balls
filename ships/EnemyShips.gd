@@ -1,2 +1,2 @@
-extends "res://Ships.gd"
+extends "res://ships/Ships.gd"
 

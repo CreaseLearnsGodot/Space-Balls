@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://ships/Player.gd" type="Script" id=1]
 [ext_resource path="res://bullets/playerBullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ship_red.png" type="Texture" id=3]
 [ext_resource path="res://ships/Muzzle.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/sfx_wpn_laser2.wav" type="AudioStream" id=5]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.2
@@ -15,10 +14,11 @@ extents = Vector2( 20, 20 )
 
 [node name="Player" type="RigidBody2D"]
 collision_layer = 2
-collision_mask = 5
-mass = 0.615306
+collision_mask = 13
+mass = 0.5
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
+contact_monitor = true
 can_sleep = false
 linear_damp = 2.0
 angular_damp = 3.0
@@ -47,8 +47,4 @@ limit_bottom = 1472
 drag_margin_h_enabled = false
 drag_margin_v_enabled = false
 smoothing_enabled = true
-
-[node name="SoundShoot" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 5 )
-max_distance = 600.0
 

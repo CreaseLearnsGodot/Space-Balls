@@ -1,10 +1,11 @@
 extends Area2D
 
 export (int) var speed
-#export (int) var damage
+export (int) var damage
 export (float) var lifetime
 
 var velocity = Vector2()
+
 
 func start(_position, _direction):
     position = _position
@@ -21,5 +22,6 @@ func explode():
 func _on_Lifetime_timeout():
 	explode()
 
-#func _on_Bullet_body_entered(body):
-	explode()
+func _on_Bullet_body_entered(body):
+	if body.has_method('take_damage'):
+		body.take_damage(damage)
