@@ -13,6 +13,8 @@ bounce = 0.5
 extents = Vector2( 20, 20 )
 
 [node name="Ships" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 13
 mass = 0.615306
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0

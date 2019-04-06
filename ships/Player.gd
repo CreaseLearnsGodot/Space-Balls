@@ -24,6 +24,7 @@ func _input(event):                             # turns thruster flames on
     elif(event.is_action_released("ui_up")):    # until you release forward.
         is_thrusting = false                    # no thrusters when in reverse
 
+
 # GET INPUT FUNCTION
 func get_input():
 	if Input.is_action_pressed("ui_up"):         # move ship forward
@@ -41,15 +42,18 @@ func get_input():
 		get_tree().quit()                        # this function call closes the game
 
 # PHYSICS PROCESS FUNCTION
-func _physics_process(delta):                      
+func _physics_process(delta):
+                    
 	set_applied_force(thrust.rotated(rotation))     # emulates space flight physics
 	set_applied_torque(rotation_dir * spin_thrust)  # using drag, rotation, inertia
 	if(is_thrusting):                               # checks for key press FORWARD
 		thrusters.set_emitting(true)                # if so it activates thrusters
+		if not $ThrustSound.playing:
+			($ThrustSound).play()  
 	else:                                           # if FORWARD key isn't pressed
 		thrusters.set_emitting(false)               # turns off particle thrusters
+		($ThrustSound).stop()
 	get_input()                                     # holds onto all this info
-	
 	
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
