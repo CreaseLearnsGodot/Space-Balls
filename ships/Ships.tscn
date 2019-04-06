@@ -3,7 +3,7 @@
 [ext_resource path="res://ships/Ships.gd" type="Script" id=1]
 [ext_resource path="res://assets/ship_red.png" type="Texture" id=2]
 [ext_resource path="res://ships/Muzzle.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/sfx_wpn_laser2.wav" type="AudioStream" id=4]
+[ext_resource path="res://effects/Explosion.tscn" type="PackedScene" id=4]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.2
@@ -13,6 +13,8 @@ bounce = 0.5
 extents = Vector2( 20, 20 )
 
 [node name="Ships" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 5
 mass = 0.615306
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
@@ -20,6 +22,7 @@ can_sleep = false
 linear_damp = 2.0
 angular_damp = 3.0
 script = ExtResource( 1 )
+max_health = 200
 
 [node name="Body" type="Sprite" parent="."]
 position = Vector2( 0, -3.8147e-006 )
@@ -42,7 +45,7 @@ drag_margin_h_enabled = false
 drag_margin_v_enabled = false
 smoothing_enabled = true
 
-[node name="SoundShoot" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 4 )
-max_distance = 600.0
+[node name="Explosion" parent="." instance=ExtResource( 4 )]
+visible = false
+animation = "smoke"
 

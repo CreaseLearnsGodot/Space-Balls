@@ -4,7 +4,7 @@
 [ext_resource path="res://bullets/playerBullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ship_red.png" type="Texture" id=3]
 [ext_resource path="res://ships/Muzzle.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/sfx_wpn_laser2.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/thrusters.wav" type="AudioStream" id=5]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.2
@@ -15,15 +15,18 @@ extents = Vector2( 20, 20 )
 
 [node name="Player" type="RigidBody2D"]
 collision_layer = 2
-collision_mask = 5
-mass = 0.615306
+collision_mask = 13
+mass = 0.5
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
+contacts_reported = 1
+contact_monitor = true
 can_sleep = false
 linear_damp = 2.0
 angular_damp = 3.0
 script = ExtResource( 1 )
 Bullet = ExtResource( 2 )
+max_health = 200
 engine_thrust = 500
 spin_thrust = 1500
 
@@ -40,6 +43,7 @@ shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+zoom = Vector2( 0.75, 0.75 )
 limit_left = 32
 limit_top = 32
 limit_right = 2960
@@ -48,7 +52,8 @@ drag_margin_h_enabled = false
 drag_margin_v_enabled = false
 smoothing_enabled = true
 
-[node name="SoundShoot" type="AudioStreamPlayer2D" parent="."]
+[node name="ThrustSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
-max_distance = 600.0
+volume_db = -2.32
+pitch_scale = 0.1
 
