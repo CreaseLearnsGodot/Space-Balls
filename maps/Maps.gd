@@ -25,7 +25,7 @@ var screensize
 #############################################################################
 
 func ready():
-	screensize = get_viewport().get_visible_rect().size  # tells camera where to look
+	screensize = get_viewport().get_visible_rect().size
 	
 func _on_Ships_shoot(Bullet, _position, _direction):
 	var b = Bullet.instance()
@@ -38,13 +38,21 @@ func _on_RightGoalArea_body_entered(body):
 		homeScore += 1
 		($Goal).play()
 		home_label.set_text(str(homeScore))
+		newBall()
 
 func _on_LeftGoalArea_body_entered(body):
 	if body.get_name() == "SoccerBall":
 		visitorScore += 1
 		($Goal).play()
 		visitor_label.set_text(str(visitorScore))
-		
+		newBall()
+
+func newBall():
+	$SoccerBall.reset_state = true
+
+func _on_Player_dead():
+	pass
+
 ############################################################################
 #   FUNCTIONS COMPLETE                                                     #
 ############################################################################

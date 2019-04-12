@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://ships/Goalie.gd" type="Script" id=1]
+[ext_resource path="res://assets/goalie.png" type="Texture" id=2]
+[ext_resource path="res://ships/Muzzle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://effects/Explosion.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/UnitDisplay.tscn" type="PackedScene" id=5]
+
+[sub_resource type="PhysicsMaterial" id=3]
+friction = 0.5
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 20, 20 )
+
+[node name="Goalie" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 3
+physics_material_override = SubResource( 3 )
+gravity_scale = 0.0
+contacts_reported = 1
+contact_monitor = true
+script = ExtResource( 1 )
+max_health = 500
+gun_cooldown = 0.5
+detect_radius = 25
+
+[node name="Body" type="Sprite" parent="."]
+position = Vector2( 0, -3.8147e-006 )
+rotation = 1.5708
+scale = Vector2( 0.178709, 0.178709 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 0.517499, 1.51019 )
+shape = SubResource( 2 )
+
+[node name="Muzzle" parent="." instance=ExtResource( 3 )]
+position = Vector2( 13.6738, 0 )
+
+[node name="Explosion" parent="." instance=ExtResource( 4 )]
+visible = false
+frame = 0
+
+[node name="DetectRadius" type="Area2D" parent="."]
+gravity_vec = Vector2( 0, 0 )
+gravity = 0.0
+collision_layer = 4
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectRadius"]
+scale = Vector2( 27.76, 27.76 )
+
+[node name="GunTimer" type="Timer" parent="."]
+process_mode = 0
+
+[node name="UnitDisplay" parent="." instance=ExtResource( 5 )]
+
+[node name="LookAhead1" type="RayCast2D" parent="."]
+position = Vector2( 0, 10 )
+enabled = true
+cast_to = Vector2( 50, 30 )
+
+[node name="LookAhead2" type="RayCast2D" parent="."]
+position = Vector2( 0, -10 )
+enabled = true
+cast_to = Vector2( 50, -30 )
+collision_mask = 4
+
+[connection signal="health_changed" from="." to="UnitDisplay" method="update_healthbar"]
+[connection signal="body_entered" from="DetectRadius" to="." method="_on_DetectRadius_body_entered"]
+[connection signal="body_exited" from="DetectRadius" to="." method="_on_DetectRadius_body_exited"]

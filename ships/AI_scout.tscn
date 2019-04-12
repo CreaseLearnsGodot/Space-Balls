@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://ships/EnemyShips.gd" type="Script" id=1]
+[ext_resource path="res://ships/AI_scout.gd" type="Script" id=1]
 [ext_resource path="res://assets/AI_scout.png" type="Texture" id=2]
-[ext_resource path="res://assets/sfx_wpn_laser2.wav" type="AudioStream" id=3]
+[ext_resource path="res://effects/Explosion.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/sfx_wpn_laser2.wav" type="AudioStream" id=4]
+[ext_resource path="res://ui/UnitDisplay.tscn" type="PackedScene" id=5]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.5
@@ -13,8 +15,10 @@ friction = 0.5
 rotation = 1.5708
 collision_layer = 4
 collision_mask = 3
+mass = 0.62
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
+contacts_reported = 3
 contact_monitor = true
 linear_damp = 0.5
 angular_damp = 0.5
@@ -22,22 +26,52 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-max_health = 300
 
 [node name="Body" type="Sprite" parent="."]
 position = Vector2( 0.40583, 0 )
-scale = Vector2( 0.976891, 1 )
+scale = Vector2( 0.496892, 0.508646 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -1.25172 )
-scale = Vector2( 4, 6.4 )
+visible = false
+position = Vector2( 7.81845e-007, -0.305938 )
+scale = Vector2( 2.07, 3.232 )
 shape = SubResource( 2 )
 
 [node name="Muzzle" type="Position2D" parent="."]
-position = Vector2( 0, -60 )
+position = Vector2( -0.000116348, -32.6903 )
+
+[node name="Explosion" parent="." instance=ExtResource( 3 )]
+visible = false
 
 [node name="SoundShoot" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 3 )
+stream = ExtResource( 4 )
 max_distance = 600.0
 
+[node name="DetectRadius" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectRadius"]
+scale = Vector2( 13.12, 13.12 )
+
+[node name="GunTimer" type="Timer" parent="."]
+process_mode = 0
+
+[node name="UnitDisplay" parent="." instance=ExtResource( 5 )]
+rotation = -1.5708
+
+[node name="LookAhead1" type="RayCast2D" parent="."]
+position = Vector2( 10, -3.61999e-005 )
+rotation = -1.5708
+enabled = true
+cast_to = Vector2( 50, 30 )
+collision_mask = 4
+
+[node name="LookAhead2" type="RayCast2D" parent="."]
+position = Vector2( -10, 3.61999e-005 )
+rotation = -1.5708
+cast_to = Vector2( 50, -30 )
+collision_mask = 4
+
+[connection signal="health_changed" from="." to="UnitDisplay" method="update_healthbar"]
+[connection signal="animation_finished" from="Explosion" to="." method="_on_Explosion_animation_finished"]
+[connection signal="timeout" from="GunTimer" to="." method="_on_GunTimer_timeout"]

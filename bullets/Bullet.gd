@@ -4,25 +4,26 @@ extends Area2D
 #################################################################################
 export (int) var speed
 export (int) var damage
-export (float) var lifetime
+var target = null
 var velocity = Vector2()
 #################################################################################
 #  Functions                                                                    #
 #################################################################################
-func start(_position, _direction):
-    position = _position
-    rotation = _direction.angle()
-    $Lifetime.wait_time = lifetime
-    velocity = _direction * speed
+func start(_position, _direction, _target=null):
+	position = _position
+	rotation = _direction.angle()
+	velocity = _direction * speed
+	target = _target
+	
 
 func _process(delta):
-    position += velocity * delta
+	position += velocity * delta
 
 func explode():
 	velocity = Vector2()
 	$Sprite.hide()
 	$Explosion.show()
-	$Explosion.play("smoke")
+	$Explosion.play("fire")
 
 func _on_Lifetime_timeout():
 	explode()

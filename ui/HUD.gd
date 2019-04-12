@@ -23,6 +23,12 @@ var bar_texture
 #  Functions                                                                    #
 #################################################################################
 
+func show_shield():
+	$Margin/Container/Shield.show()
+
+func hide_shield():
+	$Margin/Container/Shield.hide() 
+
 func update_healthbar(value):
     bar_texture = bar_green
     if value < 60:

@@ -19,19 +19,19 @@ custom_constants/margin_bottom = 20
 [node name="Container" type="HBoxContainer" parent="Margin"]
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 1580.0
-margin_bottom = 880.0
+margin_right = 1260.0
+margin_bottom = 700.0
 custom_constants/separation = 0
 
-[node name="TextureRect" type="TextureRect" parent="Margin/Container"]
+[node name="Shield" type="TextureRect" parent="Margin/Container"]
+visible = false
 margin_right = 30.0
-margin_bottom = 860.0
+margin_bottom = 680.0
 texture = ExtResource( 2 )
 
 [node name="HealthBar" type="TextureProgress" parent="Margin/Container"]
-margin_left = 30.0
-margin_right = 230.0
-margin_bottom = 860.0
+margin_right = 200.0
+margin_bottom = 680.0
 texture_over = ExtResource( 3 )
 texture_progress = ExtResource( 4 )
 

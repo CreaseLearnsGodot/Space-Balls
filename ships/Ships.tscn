@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://ships/Ships.gd" type="Script" id=1]
 [ext_resource path="res://assets/ship_red.png" type="Texture" id=2]
@@ -12,17 +12,20 @@ bounce = 0.5
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 20, 20 )
 
+[sub_resource type="CircleShape2D" id=3]
+
 [node name="Ships" type="RigidBody2D"]
-collision_layer = 2
+collision_layer = 4
 collision_mask = 5
 mass = 0.615306
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
-can_sleep = false
+contact_monitor = true
 linear_damp = 2.0
 angular_damp = 3.0
 script = ExtResource( 1 )
-max_health = 200
+max_health = 300
+gun_cooldown = 0.2
 
 [node name="Body" type="Sprite" parent="."]
 position = Vector2( 0, -3.8147e-006 )
@@ -46,6 +49,27 @@ drag_margin_v_enabled = false
 smoothing_enabled = true
 
 [node name="Explosion" parent="." instance=ExtResource( 4 )]
-visible = false
-animation = "smoke"
+frame = 0
 
+[node name="DetectRadius" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectRadius"]
+shape = SubResource( 3 )
+
+[node name="GunTimer" type="Timer" parent="."]
+process_mode = 0
+
+[node name="LookAhead1" type="RayCast2D" parent="."]
+position = Vector2( 0, 10 )
+enabled = true
+cast_to = Vector2( 50, 30 )
+collision_mask = 5
+
+[node name="LookAhead2" type="RayCast2D" parent="."]
+position = Vector2( 0, -10 )
+enabled = true
+cast_to = Vector2( 50, -30 )
+collision_mask = 5
+
+[connection signal="animation_finished" from="Explosion" to="." method="_on_Explosion_animation_finished"]
+[connection signal="timeout" from="GunTimer" to="." method="_on_GunTimer_timeout"]

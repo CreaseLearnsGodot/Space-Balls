@@ -1,0 +1,98 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://titletheme.tres" type="Theme" id=1]
+[ext_resource path="res://MainMenu.gd" type="Script" id=2]
+[ext_resource path="res://assets/UI/titlescreen0.png" type="Texture" id=3]
+[ext_resource path="res://assets/UI/titlescreen1.png" type="Texture" id=4]
+[ext_resource path="res://assets/UI/titlescreen2.png" type="Texture" id=5]
+[ext_resource path="res://assets/UI/titlescreen3.png" type="Texture" id=6]
+[ext_resource path="res://assets/UI/titlescreen4.png" type="Texture" id=7]
+[ext_resource path="res://assets/UI/titlescreen5.png" type="Texture" id=8]
+[ext_resource path="res://assets/UI/titlescreen6.png" type="Texture" id=9]
+[ext_resource path="res://assets/UI/titlescreen7.png" type="Texture" id=10]
+[ext_resource path="res://assets/UI/optionsBG.png" type="Texture" id=11]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
+"loop": false,
+"name": "title",
+"speed": 10.0
+} ]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Title Anim" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "title"
+frame = 7
+playing = true
+centered = false
+
+[node name="menuButtons" type="Sprite" parent="."]
+position = Vector2( 207, 64 )
+scale = Vector2( 0.84657, 0.84657 )
+centered = false
+offset = Vector2( -10, 0 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 400, 350 )
+texture = ExtResource( 11 )
+centered = false
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 150.0
+margin_bottom = 150.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 456.0
+margin_top = 255.0
+margin_right = 823.0
+margin_bottom = 465.0
+alignment = 1
+
+[node name="SoundFX Volume" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_right = 367.0
+margin_bottom = 62.0
+text = "Sound FX Volume:"
+
+[node name="FX" type="HSlider" parent="CenterContainer/VBoxContainer"]
+margin_top = 66.0
+margin_right = 367.0
+margin_bottom = 70.0
+value = 100.0
+ticks_on_borders = true
+
+[node name="Music Volume" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_top = 74.0
+margin_right = 367.0
+margin_bottom = 136.0
+text = "Music Volume:"
+align = 1
+
+[node name="MUSIC" type="HSlider" parent="CenterContainer/VBoxContainer"]
+margin_top = 140.0
+margin_right = 367.0
+margin_bottom = 144.0
+value = 50.0
+ticks_on_borders = false
+
+[node name="Back" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 148.0
+margin_right = 367.0
+margin_bottom = 210.0
+text = "GO BACK"
+flat = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Back" to="." method="_on_Back_pressed"]

@@ -1,4 +1,5 @@
 extends RigidBody2D
+
 #################################################################################
 #    WELCOME TO SPACE BALLS!            **SPECIAL THANKS TO KIDSCANCODE.ORG!**  #
 #      THANKS FOR PLAYING!               EMAIL:  CHRIS@EVERYTECHNOLOGY.COM      #
@@ -16,34 +17,78 @@ extends RigidBody2D
 #                      Declare Variables/Signals/Constants                      #
 #################################################################################
 
-signal shoot                       # universal signal to fire gun
-signal health_changed              # universal signal to adjust health indicator
+signal shoot                       
+signal health_changed             
+signal dead
+signal shields_up
+signal shields_down
+
+export (int) var max_health          
+var health                           
+var can_shoot = true
+var alive = true
+export (float) var gun_cooldown
 export (PackedScene) var Bullet = preload("res://bullets/Bullet.tscn")
-export (int) var max_health          # max health variable setting in menu
-var health                           # current health status variable
+var shieldsUp = false
 
 #################################################################################
 #  Functions                                                                    #
 #################################################################################
 
+func _process(delta):
+	if $ShieldTimer.is_stopped():
+		shieldsUp = false
+		emit_signal('shields_down')
+
 func _ready():
-    health = max_health
-    emit_signal('health_changed', health * 100/max_health)
+	health = max_health
+	emit_signal('health_changed', health * 100/max_health)
+	$GunTimer.wait_time = gun_cooldown
 
 func take_damage(amount):
-	health -= amount
-	emit_signal('health_changed', health * 100/max_health)
-#	if health < max_health / 2:
-#		$Smoke.emitting = true
+	if shieldsUp:
+		health -= amount/2
+		emit_signal('health_changed', health * 100/max_health)
+	else:
+		health -= amount
+		emit_signal('health_changed', health * 100/max_health)
 	if health <= 0:
-		explode()
+			explode()
 
 func explode():
-    queue_free()
+	$CollisionShape2D.call_deferred('free')
+	can_shoot = false
+	alive = false
+	$Body.hide()
+	$Explosion.show()
+	$Explosion.play()
+	emit_signal('dead')
+
+func _on_GunTimer_timeout():
+	if alive != false:
+		can_shoot = true
+	
+func _on_Explosion_animation_finished():
+	queue_free()
+
+func shield():
+	shieldsUp = true
+	emit_signal('shields_up')
+	$ShieldTimer.start()
+
+
+func heal(amount):
+	health += amount
+	health = clamp(health, 0, max_health)
+	emit_signal('health_changed', health * 100/max_health)
+	($Bloop).play()
 
 func shoot():
-	var dir = Vector2(1, 0).rotated($Muzzle.global_rotation)
-	emit_signal('shoot', Bullet,$Muzzle.global_position, dir)
+    if can_shoot:
+        can_shoot = false
+        $GunTimer.start()
+        var dir = Vector2(1, 0).rotated($Muzzle.global_rotation)
+        emit_signal('shoot', Bullet,$Muzzle.global_position, dir)
 
 ############################################################################
 #~~~FUNKIN FUNCTIONS ARE DONE~~~~~~~~~ONLY COMMENTED CODE SNIPPETS BELOW~~~#
