@@ -14,6 +14,7 @@ func start(_position, _direction, _target=null):
 	rotation = _direction.angle()
 	velocity = _direction * speed
 	target = _target
+	$Lifetime.start()
 	
 
 func _process(delta):

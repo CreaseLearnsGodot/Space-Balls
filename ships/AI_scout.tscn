@@ -1,10 +1,13 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://ships/AI_scout.gd" type="Script" id=1]
-[ext_resource path="res://assets/AI_scout.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/AI_scout.png" type="Texture" id=2]
 [ext_resource path="res://effects/Explosion.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/sfx_wpn_laser2.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/audio/sfx_wpn_laser2.wav" type="AudioStream" id=4]
 [ext_resource path="res://ui/UnitDisplay.tscn" type="PackedScene" id=5]
+
+
+
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.5

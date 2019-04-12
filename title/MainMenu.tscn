@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/themes/titletheme.tres" type="Theme" id=1]
+[ext_resource path="res://title/MainMenu.gd" type="Script" id=2]
+[ext_resource path="res://assets/UI/titlescreen0.png" type="Texture" id=3]
+[ext_resource path="res://assets/UI/titlescreen1.png" type="Texture" id=4]
+[ext_resource path="res://assets/UI/titlescreen2.png" type="Texture" id=5]
+[ext_resource path="res://assets/UI/titlescreen3.png" type="Texture" id=6]
+[ext_resource path="res://assets/UI/titlescreen4.png" type="Texture" id=7]
+[ext_resource path="res://assets/UI/titlescreen5.png" type="Texture" id=8]
+[ext_resource path="res://assets/UI/titlescreen6.png" type="Texture" id=9]
+[ext_resource path="res://assets/UI/titlescreen7.png" type="Texture" id=10]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
+"loop": false,
+"name": "title",
+"speed": 10.0
+} ]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Title Anim" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "title"
+frame = 7
+playing = true
+centered = false
+
+[node name="menuButtons" type="Sprite" parent="."]
+position = Vector2( 207, 64 )
+scale = Vector2( 0.84657, 0.84657 )
+centered = false
+offset = Vector2( -10, 0 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 200.0
+margin_right = 10.0
+margin_bottom = 200.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 548.0
+margin_top = 255.0
+margin_right = 732.0
+margin_bottom = 465.0
+custom_constants/separation = 12
+alignment = 1
+
+[node name="Start" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_right = 184.0
+margin_bottom = 62.0
+grow_horizontal = 0
+text = "START"
+flat = true
+
+[node name="Options" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 74.0
+margin_right = 184.0
+margin_bottom = 136.0
+text = "OPTIONS"
+flat = true
+
+[node name="Quit" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 148.0
+margin_right = 184.0
+margin_bottom = 210.0
+text = "QUIT"
+flat = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]

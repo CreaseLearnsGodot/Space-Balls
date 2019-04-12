@@ -2,10 +2,10 @@
 
 [ext_resource path="res://ships/Player.gd" type="Script" id=1]
 [ext_resource path="res://bullets/PlayerBullet.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ship_red.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/ship_red.png" type="Texture" id=3]
 [ext_resource path="res://ships/Muzzle.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/thrusters.wav" type="AudioStream" id=5]
-[ext_resource path="res://assets/sfx_sounds_fanfare3.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/audio/thrusters.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/audio/sfx_sounds_fanfare3.wav" type="AudioStream" id=6]
 [ext_resource path="res://effects/Explosion.tscn" type="PackedScene" id=7]
 
 [sub_resource type="PhysicsMaterial" id=1]
@@ -44,7 +44,6 @@ shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 0.75, 0.75 )
 limit_left = 32
 limit_top = 32
 limit_right = 2960
@@ -62,7 +61,6 @@ pitch_scale = 0.1
 stream = ExtResource( 6 )
 
 [node name="GunTimer" type="Timer" parent="."]
-process_mode = 0
 
 [node name="ShieldTimer" type="Timer" parent="."]
 wait_time = 5.0

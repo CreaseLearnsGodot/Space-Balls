@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/tiles/oddtileset.png" type="Texture" id=1]
+
+
+[node name="Node" type="Node"]
+
+[node name="blue tile" type="Sprite" parent="."]
+position = Vector2( 50, 0 )
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 340, 140, 10, 10 )
+
+[node name="blue tile2" type="Sprite" parent="."]
+position = Vector2( 30, 0 )
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 340, 340, 10, 10 )
+
+[node name="blue tile3" type="Sprite" parent="."]
+position = Vector2( 10, 0 )
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 670, 60, 10, 10 )
+

@@ -21,7 +21,6 @@ signal shoot
 signal health_changed             
 signal dead
 signal shields_up
-signal shields_down
 
 export (int) var max_health          
 var health                           
@@ -38,7 +37,6 @@ var shieldsUp = false
 func _process(delta):
 	if $ShieldTimer.is_stopped():
 		shieldsUp = false
-		emit_signal('shields_down')
 
 func _ready():
 	health = max_health
@@ -75,7 +73,9 @@ func shield():
 	shieldsUp = true
 	emit_signal('shields_up')
 	$ShieldTimer.start()
-
+	($Bloop).play()
+	if $ShieldTimer.is_stopped():
+		shieldsUp = false
 
 func heal(amount):
 	health += amount

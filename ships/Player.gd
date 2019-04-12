@@ -20,7 +20,7 @@ export (int) var engine_thrust         # how fast you can fly
 export (int) var spin_thrust           # how fast you can turn
 var thrust = Vector2()                 # math calculation for thrust
 var rotation_dir = 0                   # math calculation for steering
-onready var thrusters_particle = preload("res://ships/Thrusters.tscn")
+onready var thrusters_particle = preload("res://effects/Thrusters.tscn")
 onready var thrusters = thrusters_particle.instance()
 var is_thrusting = false               # exhaust particles from thrusters
 #################################################################################

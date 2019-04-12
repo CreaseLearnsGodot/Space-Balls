@@ -25,9 +25,10 @@ var bar_texture
 
 func show_shield():
 	$Margin/Container/Shield.show()
-
-func hide_shield():
-	$Margin/Container/Shield.hide() 
+	$ShieldTimer.start()
+	print($ShieldTimer)
+	if $ShieldTimer.is_stopped():
+		$Margin/Container/Shield.hide()
 
 func update_healthbar(value):
     bar_texture = bar_green
